@@ -9,6 +9,8 @@ import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.tianxiabuyi.mvp.base.delegate.IAppLifecycle;
+
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
@@ -412,7 +414,7 @@ public final class AppManager {
     /**
      * 提供给外部扩展 AppManager 的 @{@link #onReceive} 方法(远程遥控 AppManager 的功能)
      * 建议在 {@link ConfigModule#injectAppLifecycle(Context, List)} 中
-     * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,
+     * 通过 {@link IAppLifecycle #onCreate(Application)} 在 App 初始化时,
      * 使用此方法传入自定义的 {@link HandleListener}
      *
      * @param handleListener

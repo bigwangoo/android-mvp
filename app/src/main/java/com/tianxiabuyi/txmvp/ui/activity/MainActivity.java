@@ -12,10 +12,10 @@ import com.tianxiabuyi.mvp.base.BaseActivity;
 import com.tianxiabuyi.mvp.dagger.component.AppComponent;
 import com.tianxiabuyi.mvp.utils.AppUtils;
 import com.tianxiabuyi.txmvp.R;
-import com.tianxiabuyi.txmvp.contract.UserContract;
 import com.tianxiabuyi.txmvp.dagger.component.DaggerUserComponent;
 import com.tianxiabuyi.txmvp.dagger.module.UserModule;
-import com.tianxiabuyi.txmvp.presenter.UserPresenter;
+import com.tianxiabuyi.txmvp.mvp.contract.UserContract;
+import com.tianxiabuyi.txmvp.mvp.presenter.UserPresenter;
 
 import javax.inject.Inject;
 
@@ -24,6 +24,8 @@ import timber.log.Timber;
 
 /**
  * demo
+ * <p>
+ * 传入泛型 presenter  实现 View接口
  */
 public class MainActivity extends BaseActivity<UserPresenter> implements
         UserContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -38,7 +40,7 @@ public class MainActivity extends BaseActivity<UserPresenter> implements
     @Inject
     RecyclerView.Adapter mAdapter;
     @Inject
-    RecyclerView.LayoutManager mLayoutManager;
+    RecyclerView.LayoutManager mLayoutManager; // 注入对象不能private
 
     // 分页
     private Paginate mPaginate;
@@ -47,10 +49,10 @@ public class MainActivity extends BaseActivity<UserPresenter> implements
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        // 编译生成
+        // 编译时生成, 注入标记 @Inject 对象
         DaggerUserComponent.builder()
-                .appComponent(appComponent)
-                .userModule(new UserModule(this))
+                .appComponent(appComponent)         // app通用对象注入
+                .userModule(new UserModule(this))   // module对象注入
                 .build().inject(this);
     }
 
@@ -62,7 +64,6 @@ public class MainActivity extends BaseActivity<UserPresenter> implements
     @Override
     public void initData(Bundle savedInstanceState) {
         initRV();
-
         initPaginate();
         // 打开时自动加载列表
         mPresenter.requestUsers(true);

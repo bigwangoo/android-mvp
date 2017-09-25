@@ -2,8 +2,8 @@ package com.tianxiabuyi.txmvp.dagger.component;
 
 import com.tianxiabuyi.mvp.dagger.component.AppComponent;
 import com.tianxiabuyi.mvp.dagger.scope.ActivityScope;
-import com.tianxiabuyi.txmvp.ui.activity.MainActivity;
 import com.tianxiabuyi.txmvp.dagger.module.UserModule;
+import com.tianxiabuyi.txmvp.ui.activity.MainActivity;
 
 import dagger.Component;
 

@@ -7,8 +7,6 @@ import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tianxiabuyi.mvp.manager.IRepositoryManager;
-import com.tianxiabuyi.mvp.manager.RepositoryManager;
 
 import java.util.Map;
 
@@ -39,6 +37,9 @@ public class AppModule {
         return mApplication;
     }
 
+    /**
+     * gson
+     */
     @Singleton
     @Provides
     public Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
@@ -48,12 +49,9 @@ public class AppModule {
         return builder.create();
     }
 
-    @Singleton
-    @Provides
-    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
-        return repositoryManager;
-    }
-
+    /**
+     * 用来存取一些整个App公用的数据,切勿大量存放大容量数据
+     */
     @Singleton
     @Provides
     public Map<String, Object> provideExtras() {

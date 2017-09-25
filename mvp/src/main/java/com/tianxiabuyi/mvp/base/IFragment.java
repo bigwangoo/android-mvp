@@ -21,32 +21,21 @@ public interface IFragment {
 
     /**
      * 提供 AppComponent(提供所有的单例对象)给实现类,进行 Component 依赖
-     *
-     * @param appComponent
      */
     void setupFragmentComponent(AppComponent appComponent);
 
     /**
      * 是否使用 {@link EventBus}
-     *
-     * @return
      */
     boolean useEventBus();
 
     /**
      * 初始化 View
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
      */
     View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
      * 初始化数据
-     *
-     * @param savedInstanceState
      */
     void initData(Bundle savedInstanceState);
 
@@ -58,8 +47,6 @@ public interface IFragment {
      * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onCreate还没执行
      * setData里却调用了presenter的方法时,是会报空的,因为dagger注入是在onCreated方法中执行的,然后才创建的presenter
      * 如果要做一些初始化操作,可以不必让外部调setData,在initData中初始化就可以了
-     *
-     * @param data
      */
     void setData(Object data);
 }

@@ -10,6 +10,8 @@ import com.tianxiabuyi.mvp.utils.AppUtils;
 import org.simple.eventbus.EventBus;
 
 /**
+ * {@link IActivityDelegate} 默认实现类
+ * <p>
  * Created in 2017/9/21 16:49.
  *
  * @author Wang YaoDong.

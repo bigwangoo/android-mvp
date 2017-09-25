@@ -27,7 +27,7 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.CREATE);
             if (activity instanceof FragmentActivity) {
                 if (mFragmentLifecycle == null) {
@@ -40,28 +40,28 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.START);
         }
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.RESUME);
         }
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.PAUSE);
         }
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.STOP);
         }
     }
@@ -73,12 +73,12 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if (activity instanceof ActivityLifecycle) {
+        if (activity instanceof IActivityILifecycle) {
             obtainSubject(activity).onNext(ActivityEvent.DESTROY);
         }
     }
 
     private Subject<ActivityEvent> obtainSubject(Activity activity) {
-        return ((ActivityLifecycle) activity).provideLifecycleSubject();
+        return ((IActivityILifecycle) activity).provideLifecycleSubject();
     }
 }

@@ -1,6 +1,6 @@
 package com.tianxiabuyi.mvp.mvp;
 
-import com.tianxiabuyi.mvp.manager.IRepositoryManager;
+import com.tianxiabuyi.mvp.manager.RepositoryManager;
 
 /**
  * Created in 2017/9/20 14:05.
@@ -9,10 +9,12 @@ import com.tianxiabuyi.mvp.manager.IRepositoryManager;
  */
 public class BaseModel implements IModel {
 
-    // 用于管理网络请求层,以及数据缓存层
-    protected IRepositoryManager mRepositoryManager;
+    /**
+     * 用于管理网络请求层,以及数据缓存层
+     */
+    protected RepositoryManager mRepositoryManager;
 
-    public BaseModel(IRepositoryManager repositoryManager) {
+    public BaseModel(RepositoryManager repositoryManager) {
         this.mRepositoryManager = repositoryManager;
     }
 

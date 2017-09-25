@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Lazy;
 import io.rx_cache2.internal.RxCache;
@@ -19,7 +20,8 @@ import retrofit2.Retrofit;
  *
  * @author Wang YaoDong.
  */
-public class RepositoryManager implements IRepositoryManager {
+@Singleton
+public class RepositoryManager {
 
     private Application mApplication;
 
@@ -36,14 +38,13 @@ public class RepositoryManager implements IRepositoryManager {
         this.mRxCache = mRxCache;
     }
 
+    public Context getContext() {
+        return mApplication;
+    }
+
     /**
      * 根据传入的 Class 获取对应的 Retrofit service
-     *
-     * @param service
-     * @param <T>
-     * @return
      */
-    @Override
     public <T> T obtainRetrofitService(Class<T> service) {
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
@@ -58,12 +59,7 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的 Class 获取对应的 RxCache service
-     *
-     * @param cache
-     * @param <T>
-     * @return
      */
-    @Override
     public <T> T obtainCacheService(Class<T> cache) {
         T cacheService;
         synchronized (mCacheServiceCache) {
@@ -76,13 +72,10 @@ public class RepositoryManager implements IRepositoryManager {
         return cacheService;
     }
 
-    @Override
+    /**
+     * 清理所有缓存
+     */
     public void clearAllCache() {
         mRxCache.get().evictAll();
-    }
-
-    @Override
-    public Context getContext() {
-        return mApplication;
     }
 }

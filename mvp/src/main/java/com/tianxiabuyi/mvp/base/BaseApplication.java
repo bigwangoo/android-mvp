@@ -8,7 +8,7 @@ import com.tianxiabuyi.mvp.base.delegate.AppDelegate;
 import com.tianxiabuyi.mvp.dagger.component.AppComponent;
 
 /**
- * application 参考
+ * application 参考示例
  * <p>
  * Created in 2017/9/21 9:13.
  *
@@ -16,6 +16,9 @@ import com.tianxiabuyi.mvp.dagger.component.AppComponent;
  */
 public class BaseApplication extends Application implements IApp {
 
+    /**
+     * application 生命周期方法代理
+     */
     private AppDelegate mAppDelegate;
 
     @Override

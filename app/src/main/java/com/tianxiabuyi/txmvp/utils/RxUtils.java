@@ -5,6 +5,7 @@ import com.tianxiabuyi.mvp.utils.RxLifecycleUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -37,8 +38,10 @@ public class RxUtils {
                             public void run() {
                                 view.hideLoading(); //隐藏进度条
                             }
-                        }).compose(RxLifecycleUtils.bindToLifecycle(view));
+                        })
+                        .compose(RxLifecycleUtils.bindToLifecycle(view));
             }
         };
     }*/
+
 }

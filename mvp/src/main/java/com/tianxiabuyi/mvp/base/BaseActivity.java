@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tianxiabuyi.mvp.manager.Lifecycle.ActivityLifecycle;
+import com.tianxiabuyi.mvp.manager.Lifecycle.IActivityILifecycle;
 import com.tianxiabuyi.mvp.mvp.IPresenter;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -22,9 +22,10 @@ import io.reactivex.subjects.Subject;
  * @author Wang YaoDong.
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements
-        IActivity, ActivityLifecycle {
+        IActivity, IActivityILifecycle {
 
     protected final String TAG = this.getClass().getSimpleName();
+
     // 生命周期管理
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     // butterKnife 绑定
@@ -40,6 +41,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         return mLifecycleSubject;
     }
 
+    /**
+     * 初始化
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         initData(savedInstanceState);
     }
 
+    /**
+     * 对象回收,释放资源
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

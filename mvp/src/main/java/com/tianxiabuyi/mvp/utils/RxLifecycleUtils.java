@@ -1,8 +1,8 @@
 package com.tianxiabuyi.mvp.utils;
 
-import com.tianxiabuyi.mvp.manager.Lifecycle.ActivityLifecycle;
-import com.tianxiabuyi.mvp.manager.Lifecycle.FragmentLifecycle;
-import com.tianxiabuyi.mvp.manager.Lifecycle.LifecycleSubject;
+import com.tianxiabuyi.mvp.manager.Lifecycle.IActivityILifecycle;
+import com.tianxiabuyi.mvp.manager.Lifecycle.IFragmentILifecycle;
+import com.tianxiabuyi.mvp.manager.Lifecycle.ILifecycleSubject;
 import com.tianxiabuyi.mvp.mvp.IView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -32,10 +32,10 @@ public class RxLifecycleUtils {
                                                              final ActivityEvent event) {
         // 判空
         PreconditionUtils.checkNotNull(view, "view == null");
-        if (view instanceof ActivityLifecycle) {
-            return bindUntilEvent((ActivityLifecycle) view, event);
+        if (view instanceof IActivityILifecycle) {
+            return bindUntilEvent((IActivityILifecycle) view, event);
         } else {
-            throw new IllegalArgumentException("view isn't ActivityLifecycle");
+            throw new IllegalArgumentException("view isn't IActivityILifecycle");
         }
     }
 
@@ -45,15 +45,15 @@ public class RxLifecycleUtils {
     public static <T> LifecycleTransformer<T> bindUntilEvent(@NonNull final IView view,
                                                              final FragmentEvent event) {
         PreconditionUtils.checkNotNull(view, "view == null");
-        if (view instanceof FragmentLifecycle) {
-            return bindUntilEvent((FragmentLifecycle) view, event);
+        if (view instanceof IFragmentILifecycle) {
+            return bindUntilEvent((IFragmentILifecycle) view, event);
         } else {
             throw new IllegalArgumentException("view isn't FragmentLifecycleAble");
         }
     }
 
     public static <T, R> LifecycleTransformer<T> bindUntilEvent(
-            @NonNull final LifecycleSubject<R> lifecycleAble, final R event) {
+            @NonNull final ILifecycleSubject<R> lifecycleAble, final R event) {
         PreconditionUtils.checkNotNull(lifecycleAble, "lifecycleSubject == null");
         return RxLifecycle.bindUntilEvent(lifecycleAble.provideLifecycleSubject(), event);
     }
@@ -63,23 +63,23 @@ public class RxLifecycleUtils {
      */
     public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull IView view) {
         PreconditionUtils.checkNotNull(view, "view == null");
-        if (view instanceof LifecycleSubject) {
-            return bindToLifecycle((LifecycleSubject) view);
+        if (view instanceof ILifecycleSubject) {
+            return bindToLifecycle((ILifecycleSubject) view);
         } else {
             throw new IllegalArgumentException("view isn't lifecycleSubject");
         }
     }
 
-    public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull LifecycleSubject lifecycleAble) {
+    public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull ILifecycleSubject lifecycleAble) {
         PreconditionUtils.checkNotNull(lifecycleAble, "lifecycleSubject == null");
-        if (lifecycleAble instanceof ActivityLifecycle) {
+        if (lifecycleAble instanceof IActivityILifecycle) {
             return RxLifecycleAndroid
-                    .bindActivity(((ActivityLifecycle) lifecycleAble).provideLifecycleSubject());
-        } else if (lifecycleAble instanceof FragmentLifecycle) {
+                    .bindActivity(((IActivityILifecycle) lifecycleAble).provideLifecycleSubject());
+        } else if (lifecycleAble instanceof IFragmentILifecycle) {
             return RxLifecycleAndroid
-                    .bindFragment(((FragmentLifecycle) lifecycleAble).provideLifecycleSubject());
+                    .bindFragment(((IFragmentILifecycle) lifecycleAble).provideLifecycleSubject());
         } else {
-            throw new IllegalArgumentException("LifecycleSubject not match");
+            throw new IllegalArgumentException("ILifecycleSubject not match");
         }
     }
 

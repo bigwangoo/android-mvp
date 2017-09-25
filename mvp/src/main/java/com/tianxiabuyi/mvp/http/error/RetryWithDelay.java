@@ -17,8 +17,12 @@ import io.reactivex.functions.Function;
 public class RetryWithDelay implements Function<Observable<Throwable>, ObservableSource<?>> {
 
     public final String TAG = this.getClass().getSimpleName();
+
+    // 重试次数
     private final int maxRetries;
+    // 重试间隔
     private final int retryDelaySecond;
+    // 当前次数
     private int retryCount;
 
     public RetryWithDelay(int maxRetries, int retryDelaySecond) {
@@ -26,6 +30,9 @@ public class RetryWithDelay implements Function<Observable<Throwable>, Observabl
         this.retryDelaySecond = retryDelaySecond;
     }
 
+    /**
+     * When this Observable calls onNext, the original Observable will be retried (i.e. re-subscribed).
+     */
     @Override
     public ObservableSource<?> apply(@NonNull Observable<Throwable> throwableObservable) throws Exception {
 
@@ -33,11 +40,9 @@ public class RetryWithDelay implements Function<Observable<Throwable>, Observabl
             @Override
             public ObservableSource<?> apply(@NonNull Throwable throwable) throws Exception {
                 if (++retryCount <= maxRetries) {
-                    // When this Observable calls onNext, the original Observable will be retried (i.e. re-subscribed).
-                    Log.d(TAG, "get error, it will try after " + retryDelaySecond
-                            + " second, retry count " + retryCount);
-                    return Observable.timer(retryDelaySecond,
-                            TimeUnit.SECONDS);
+                    Log.d(TAG, "get error, it will try after " + retryDelaySecond + " second, "
+                            + "retry count " + retryCount);
+                    return Observable.timer(retryDelaySecond, TimeUnit.SECONDS);
                 }
                 // Max retries hit. Just pass the error along.
                 return Observable.error(throwable);

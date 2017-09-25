@@ -101,5 +101,6 @@ dependencies {
     provided rootProject.ext.dependencies["javax.annotation"]
     //test
     compile rootProject.ext.dependencies["timber"]
+    compile rootProject.ext.dependencies["logger"]
     testCompile rootProject.ext.dependencies["junit"]
 }

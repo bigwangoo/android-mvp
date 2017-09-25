@@ -5,8 +5,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.tianxiabuyi.mvp.http.RequestInterceptor;
 import com.tianxiabuyi.mvp.http.GlobalHttpHandler;
+import com.tianxiabuyi.mvp.http.RequestInterceptor;
 import com.tianxiabuyi.mvp.http.error.ResponseErrorListener;
 import com.tianxiabuyi.mvp.http.error.RxErrorHandler;
 import com.tianxiabuyi.mvp.utils.DataUtils;
@@ -41,15 +41,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
 
-    private static final int CONNECT_TIMEOUT = 10;
+    private static final int CONNECT_TIMEOUT = 10; // 超时时间
 
     /**
      * 提供 {@link Retrofit}
-     *
-     * @param builder
-     * @param client
-     * @param httpUrl
-     * @return
      */
     @Singleton
     @Provides
@@ -66,9 +61,6 @@ public class ClientModule {
 
     /**
      * 提供 {@link OkHttpClient}
-     *
-     * @param builder
-     * @return
      */
     @Singleton
     @Provides
@@ -98,13 +90,11 @@ public class ClientModule {
         return builder.build();
     }
 
-
     @Singleton
     @Provides
     Retrofit.Builder provideRetrofitBuilder() {
         return new Retrofit.Builder();
     }
-
 
     @Singleton
     @Provides
@@ -112,14 +102,12 @@ public class ClientModule {
         return new OkHttpClient.Builder();
     }
 
-
     @Singleton
     @Provides
     Interceptor provideInterceptor(RequestInterceptor intercept) {
         // 打印请求信息的拦截器
         return intercept;
     }
-
 
     /**
      * 提供 {@link RxCache} RxCache缓存路径
@@ -136,6 +124,8 @@ public class ClientModule {
 
     /**
      * 需要单独给 {@link RxCache} 提供缓存路径
+     * 缓存文件根目录(RxCache 和 Glide 的缓存都已经作为子文件夹放在这个根目录下)
+     * 应该将所有缓存都放到这个根目录下,便于管理和清理,可在 GlobalConfigModule 里配置
      */
     @Singleton
     @Provides
@@ -150,7 +140,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
+    RxErrorHandler provideRxErrorHandler(Application application, ResponseErrorListener listener) {
         return RxErrorHandler.builder()
                 .with(application)
                 .responseErrorListener(listener)
