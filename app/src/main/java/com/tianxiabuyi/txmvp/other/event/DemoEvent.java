@@ -1,4 +1,4 @@
-package com.tianxiabuyi.txmvp.app.event;
+package com.tianxiabuyi.txmvp.other.event;
 
 /**
  * Created in 2017/9/21 15:14.

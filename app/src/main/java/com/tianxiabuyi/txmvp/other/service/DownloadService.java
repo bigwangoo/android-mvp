@@ -1,4 +1,4 @@
-package com.tianxiabuyi.txmvp.app.service;
+package com.tianxiabuyi.txmvp.other.service;
 
 /**
  * Created in 2017/9/20 16:38.
